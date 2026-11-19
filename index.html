@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Shop</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 3rem auto; padding: 0 1rem; }
+    .product { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; }
+    button { padding: .5rem 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Demo Shop</h1>
+  <p>A tiny test app for Detectline.</p>
+
+  <div class="product">
+    <h2>Coffee mug</h2>
+    <p>Price: <span id="price">$12.00</span></p>
+    <button id="add">Add to cart</button>
+  </div>
+
+  <p>Cart: <span id="cart">0</span> item(s)</p>
+
+  <script>
+    let count = 0;
+    document.getElementById("add").addEventListener("click", () => {
+      count += 1;
+      document.getElementById("cart").textContent = String(count);
+    });
+  </script>
+</body>
+</html>
