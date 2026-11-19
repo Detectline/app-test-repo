@@ -1,0 +1,47 @@
+# Simulated preview provider for testing the Detectline GitHub App.
+# On every PR commit it creates a GitHub deployment ("Preview") for the head commit and
+# marks it successful, the same way Vercel or Netlify do. Detectline listens for that
+# deployment_status event.
+#
+# The preview URL comes from the PREVIEW_URL repository variable (Settings > Secrets and
+# variables > Actions > Variables). Replace this workflow with a real provider later.
+name: Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  deployments: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create deployment and mark it successful
+        uses: actions/github-script@v7
+        env:
+          PREVIEW_URL: ${{ vars.PREVIEW_URL || 'https://example.com' }}
+        with:
+          script: |
+            const sha = context.payload.pull_request.head.sha;
+            const { data: deployment } = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: sha,
+              environment: "Preview",
+              transient_environment: true,
+              production_environment: false,
+              auto_merge: false,
+              required_contexts: [],
+              description: `Preview for PR #${context.payload.pull_request.number}`,
+            });
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: "success",
+              environment_url: process.env.PREVIEW_URL,
+              description: "Preview ready",
+            });
+            core.info(`Deployment ${deployment.id} -> ${process.env.PREVIEW_URL}`);
