@@ -22,11 +22,29 @@
 
   <p>Cart: <span id="cart">0</span> item(s)</p>
 
+  <form id="coupon-form">
+    <label for="coupon">Coupon code</label>
+    <input id="coupon" name="coupon" autocomplete="off">
+    <button type="submit">Apply</button>
+  </form>
+  <p id="coupon-result" role="status"></p>
+
   <script>
     let count = 0;
     document.getElementById("add").addEventListener("click", () => {
       count += 1;
       document.getElementById("cart").textContent = String(count);
+    });
+    document.getElementById("coupon-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const code = document.getElementById("coupon").value.trim().toUpperCase();
+      const result = document.getElementById("coupon-result");
+      if (code === "SAVE10") {
+        document.getElementById("price").textContent = "$10.80";
+        result.textContent = "Coupon applied: 10% off.";
+      } else {
+        result.textContent = "This coupon code is not valid.";
+      }
     });
   </script>
 </body>
