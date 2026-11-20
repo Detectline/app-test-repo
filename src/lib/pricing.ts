@@ -15,7 +15,7 @@ export type DemoShopBug = "double_discount" | "wrong_vat" | "empty_checkout";
 export const ALL_BUGS: DemoShopBug[] = ["double_discount", "wrong_vat", "empty_checkout"];
 
 /** Ortam değişkeni ya da ?bug= verilmediğinde açık olan hatalar. */
-export const DEFAULT_BUGS: DemoShopBug[] = [];
+export const DEFAULT_BUGS: DemoShopBug[] = ["wrong_vat"];
 
 export interface CartItem {
   productId: string;
