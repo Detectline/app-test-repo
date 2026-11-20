@@ -6,12 +6,16 @@
  * - `wrong_vat`: Ekranda %20 KDV yazmasına rağmen tutar %2 ile hesaplanır.
  * - `empty_checkout`: Sepet boşken de ödeme adımına geçilip sipariş onaylanabilir.
  *
- * Varsayılan olarak üç hata da etkindir; `NEXT_PUBLIC_DEMO_SHOP_BUGS` ortam değişkeni
+ * Varsayılan hatalar DEFAULT_BUGS'ta (main'de boş: dükkan hatasız). Test PR'ları bu listeye
+ * bir hata ekleyerek "bir şeyi bozan değişiklik" taklidi yapar. `NEXT_PUBLIC_DEMO_SHOP_BUGS` ortam değişkeni
  * veya `?bug=double_discount|wrong_vat|empty_checkout|none` query parametresiyle tek tek izole edilebilir.
  */
 export type DemoShopBug = "double_discount" | "wrong_vat" | "empty_checkout";
 
 export const ALL_BUGS: DemoShopBug[] = ["double_discount", "wrong_vat", "empty_checkout"];
+
+/** Ortam değişkeni ya da ?bug= verilmediğinde açık olan hatalar. */
+export const DEFAULT_BUGS: DemoShopBug[] = [];
 
 export interface CartItem {
   productId: string;
@@ -33,7 +37,8 @@ export interface CartTotals {
 /** Ortam değişkeni veya URL parametresinden etkin hata listesini çözer. */
 export function resolveActiveBugs(queryBug?: string | null): Set<DemoShopBug> {
   const raw = (queryBug ?? process.env.NEXT_PUBLIC_DEMO_SHOP_BUGS ?? "").trim().toLowerCase();
-  if (!raw) return new Set(ALL_BUGS);
+  if (!raw) return new Set(DEFAULT_BUGS);
+  if (raw === "all") return new Set(ALL_BUGS);
   if (raw === "none" || raw === "clean") return new Set();
 
   const parsed = raw

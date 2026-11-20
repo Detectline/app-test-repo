@@ -4,13 +4,13 @@ A small Turkish storefront used to test the [Detectline](https://detectline.ai) 
 
 ## Intentional bugs
 
-All three are on by default, so Detectline has something to find:
+`main` is bug-free. Test pull requests switch one bug on through `DEFAULT_BUGS` in `src/lib/pricing.ts`, the way a real change would break something:
 
 1. `double_discount`: the `TEST10` discount is subtracted twice (20% instead of 10%).
 2. `wrong_vat`: VAT is labelled 20% but calculated at 2%.
 3. `empty_checkout`: checkout and payment work with an empty cart.
 
-Turn them off or isolate one with the `NEXT_PUBLIC_DEMO_SHOP_BUGS` environment variable or the `?bug=` query parameter: `double_discount`, `wrong_vat`, `empty_checkout` (comma separated) or `none`.
+You can also pick bugs with the `NEXT_PUBLIC_DEMO_SHOP_BUGS` environment variable or the `?bug=` query parameter: `double_discount`, `wrong_vat`, `empty_checkout` (comma separated), `all` or `none`.
 
 ## Sandbox payment data
 
