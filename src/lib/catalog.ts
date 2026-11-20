@@ -9,7 +9,7 @@ export const PRODUCTS: Product[] = [
   {
     id: "kulaklik",
     name: "Kablosuz Kulaklık",
-    description: "Aktif gürültü engellemeli stüdyo kulaklık.",
+    description: "Aktif gürültü engellemeli, 30 saat pil ömürlü stüdyo kulaklık.",
     priceTry: 1000,
   },
   {
