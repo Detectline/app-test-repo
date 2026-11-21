@@ -1,28 +1,28 @@
-# Detectline Demo Shop
+# Detectline Demo Mağaza
 
-A small Turkish storefront used to test the [Detectline](https://detectline.ai) GitHub App end to end. It has a product list, a cart with a coupon (`TEST10`, 10% off) and VAT (20%), and a checkout with an iyzico-style sandbox payment form and 3D Secure step inside an iframe.
+[Detectline](https://detectline.ai) GitHub App'ini uçtan uca test etmek için kullanılan küçük bir mağaza. Ürün listesi, kuponlu (`TEST10`, %10 indirim) ve KDV'li (%20) bir sepet, ve iframe içinde iyzico benzeri sandbox ödeme formu ile 3D Secure adımı olan bir ödeme sayfası var.
 
-## Intentional bugs
+## Bilerek bırakılan hatalar
 
-`main` is bug-free. Test pull requests switch one bug on through `DEFAULT_BUGS` in `src/lib/pricing.ts`, the way a real change would break something:
+`main` hatasız. Test pull request'leri, gerçek bir değişikliğin bir şeyi bozması gibi, `src/lib/pricing.ts` içindeki `DEFAULT_BUGS` ile bir hatayı açar:
 
-1. `double_discount`: the `TEST10` discount is subtracted twice (20% instead of 10%).
-2. `wrong_vat`: VAT is labelled 20% but calculated at 2%.
-3. `empty_checkout`: checkout and payment work with an empty cart.
+1. `double_discount`: `TEST10` indirimi iki kez düşülür (%10 yerine %20).
+2. `wrong_vat`: KDV %20 olarak yazılır ama %2 hesaplanır.
+3. `empty_checkout`: ödeme ve sipariş boş sepetle de çalışır.
 
-You can also pick bugs with the `NEXT_PUBLIC_DEMO_SHOP_BUGS` environment variable or the `?bug=` query parameter: `double_discount`, `wrong_vat`, `empty_checkout` (comma separated), `all` or `none`.
+Hataları `NEXT_PUBLIC_DEMO_SHOP_BUGS` ortam değişkeniyle ya da `?bug=` sorgu parametresiyle de seçebilirsin: `double_discount`, `wrong_vat`, `empty_checkout` (virgülle ayrılmış), `all` ya da `none`.
 
-## Sandbox payment data
+## Sandbox ödeme bilgileri
 
-- Card that succeeds: `5528 7900 0000 0008`, any future expiry, any CVC
-- Card with insufficient funds: `4111 1111 1111 1129`
-- 3D Secure SMS code: `283126`
+- Başarılı ödeme yapan kart: `5528 7900 0000 0008`, ileri tarihli herhangi bir son kullanma tarihi, herhangi bir CVC
+- Bakiyesi yetersiz kart: `4111 1111 1111 1129`
+- 3D Secure SMS kodu: `283126`
 
-## Run locally
+## Lokalde çalıştırma
 
 ```bash
 npm install
 npm run dev   # http://localhost:3001
 ```
 
-Every pull request gets a Vercel preview, which Detectline tests.
+Her pull request bir Vercel preview alır; Detectline o preview'ı test eder.
